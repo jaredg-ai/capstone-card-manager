@@ -1,4 +1,3 @@
-from typing_extensions import Required
 from flask import Flask, render_template, request, flash, redirect, session
 
 app = Flask(__name__)
