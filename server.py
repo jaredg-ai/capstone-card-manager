@@ -1,8 +1,15 @@
+from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
-from model import User
+from model import User, User_Cards
 
 
 app = Flask(__name__)
+
+
+app.secret_key = "ABC"
+
+
+app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/')
@@ -70,3 +77,18 @@ def logout():
     del session["user_id"]
     flash("Logged Out.")
     return redirect("/")
+
+
+@app.route('/library')
+def user_cards_list():
+    """Show list of users cards."""
+
+    user_cards = User_Cards.query.all()
+    return render_template("library.html", user_cards=user_cards)
+
+
+if __name__ == "__main__":
+
+    app.debug = True
+
+    app.run(host="0.0.0.0")

@@ -1,6 +1,4 @@
-from operator import index, truediv
 from flask_sqlalchemy import SQLAlchemy
-import correlation
 from collections import defaultdict
 
 
@@ -28,3 +26,5 @@ class User_Cards(db.Model):
     User_cards_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     card_id = db.Column(db.Integer, db.ForeignKey('cards.card_id'), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), index=True)
+
+
