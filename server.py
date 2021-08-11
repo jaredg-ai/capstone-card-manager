@@ -1,6 +1,6 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
-from model import User, User_Cards
+# from model import db, User, User_Cards
 
 
 app = Flask(__name__)
@@ -35,6 +35,9 @@ def register_process():
     password = request.form["password"]
 
     new_user = User(email=email, username=username, password=password)
+
+    db.session.add(new_user)
+    db.session.commit()
 
     flash(f"User {email} added.")
     return redirect(f"/library/{new_user.user_id}")

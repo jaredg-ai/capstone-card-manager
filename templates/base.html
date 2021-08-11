@@ -29,7 +29,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if "user_id" in session %}
-                    <li><a href="/users/{{ session['user_id'] }}"></a></li>
                     <li><a href="/logout">Logout</a></li>
                 {% else %}
                     <li><a href="/register">Register</a></li>
@@ -41,5 +40,7 @@
     </div>
     
 </nav>
+{% block content %}
+{% endblock %}
 </body>
 </html>
