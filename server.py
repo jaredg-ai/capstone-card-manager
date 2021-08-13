@@ -1,6 +1,7 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
-# from model import db, User, User_Cards
+# from model import connect_to_db, db, User, User_Cards
+# from flask_debugtoolbar import DebugToolbarExtension
 
 
 app = Flask(__name__)
@@ -36,8 +37,8 @@ def register_process():
 
     new_user = User(email=email, username=username, password=password)
 
-    db.session.add(new_user)
-    db.session.commit()
+    # db.session.add(new_user)
+    # db.session.commit()
 
     flash(f"User {email} added.")
     return redirect(f"/library/{new_user.user_id}")
@@ -93,5 +94,9 @@ def user_cards_list():
 if __name__ == "__main__":
 
     app.debug = True
+
+    # connect_to_db(app)
+
+    # DebugToolbarExtension(app)
 
     app.run(host="0.0.0.0")
