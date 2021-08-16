@@ -1,7 +1,8 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, flash, redirect, session
-# from model import connect_to_db, db, User, User_Cards
-# from flask_debugtoolbar import DebugToolbarExtension
+from model import connect_to_db, db, User, User_Cards
+from flask_debugtoolbar import DebugToolbarExtension
+from mtgsdk import Card
 
 
 app = Flask(__name__)
@@ -37,8 +38,8 @@ def register_process():
 
     new_user = User(email=email, username=username, password=password)
 
-    # db.session.add(new_user)
-    # db.session.commit()
+    db.session.add(new_user)
+    db.session.commit()
 
     flash(f"User {email} added.")
     return redirect(f"/library/{new_user.user_id}")
@@ -91,12 +92,19 @@ def user_cards_list():
     return render_template("library.html", user_cards=user_cards)
 
 
+@app.route('/addCard')
+def add_card():
+    """Add cards to user library."""
+
+    cards = Card.where("/addCard")
+
+
 if __name__ == "__main__":
 
     app.debug = True
 
-    # connect_to_db(app)
+    connect_to_db(app)
 
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run(host="0.0.0.0")
