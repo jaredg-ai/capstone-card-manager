@@ -2,3 +2,4 @@ env
 flask
 __pycache__
 requirements.txt
+.pytest_cache
