@@ -30,7 +30,7 @@ class User_Cards(db.Model):
 
 def connect_to_db(app):
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cards'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Dovakin8@/cards'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
