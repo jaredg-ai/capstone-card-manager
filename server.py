@@ -33,17 +33,17 @@ def register_process():
     """Process registration."""
 
     email = request.form["email"]
-    username = request.form["username"]
+    username = request.form.get("username")
     password = request.form["password"]
 
     new_user = User(email=email, username=username, password=password)
-
+    
     db.session.add(new_user)
     db.session.commit()
 
-    flash(f"User {email} added.")
+    flash(f"User {username} added.")
     return redirect(f"/library/{new_user.user_id}")
-
+    
 
 @app.route('/login', methods=['GET'])
 def login_form():
