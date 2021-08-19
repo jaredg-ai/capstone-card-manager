@@ -1,12 +1,12 @@
 from sqlalchemy import func
-from model import User, User_Cards, connect_to_db, db
+from model import User, User_Cards, Cards, connect_to_db, db
 from server import app
 
 
 def load_users():
     """Load users from u.user into database."""
 
-    print("Users")
+    print("users")
 
     for i, row in enumerate(open("seed_data/u.user")):
         row = row.strip()
@@ -14,7 +14,8 @@ def load_users():
 
         user = User(user_id=user_id,
                     email=email,
-                    username=username)
+                    username=username,
+                    password=password)
 
         db.session.add(user)
 
@@ -35,8 +36,53 @@ def set_val_user_id():
     db.session.commit()
 
 
-if __name__ == "__name__":
+def load_library():
+
+    print("library")
+
+    for i, row in enumerate(open("seed_data/l.library")):
+        row = row.strip()
+        User_cards_id, card_id, user_id = row.split("|")
+
+        library = User_Cards(User_cards_id=User_cards_id,
+                            card_id=card_id,
+                            user_id=user_id)
+
+        db.session.add(library)
+
+        if i % 100 ==0:
+            print(i)
+
+    db.session.commit()
+
+
+def load_card():
+
+    print("cardInfo")
+
+    for i, row in enumerate(open("seed_data/c.cardInfo")):
+        row = row.strip()
+        card_id, name, image, text = row.split("|")
+
+        card = Cards(card_id=card_id,
+                            name=name,
+                            image=image,
+                            text=text)
+
+        db.session.add(card)
+
+        if i % 100 ==0:
+            print(i)
+
+    db.session.commit()
+
+
+if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
     load_users()
+    load_library()
+    load_card()
+
+    db.session.commit()
