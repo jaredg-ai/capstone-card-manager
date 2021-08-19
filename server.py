@@ -1,8 +1,10 @@
-from jinja2 import StrictUndefined
+from os import name
 from flask import Flask, render_template, request, flash, redirect, session
-from model import connect_to_db, db, User, User_Cards, Cards
 from flask_debugtoolbar import DebugToolbarExtension
+from jinja2 import StrictUndefined
 
+from model import connect_to_db, db, User, User_Cards, Cards
+import magic
 
 app = Flask(__name__)
 
@@ -89,6 +91,20 @@ def user_cards_list():
 
     user_cards = User_Cards.query.all()
     return render_template("library.html", user_cards=user_cards)
+
+
+@app.route("/magicCards/search")
+def search_magic_cards():
+    """Lets user search for magic cards."""
+
+    #get card name from request.
+    #That name would bring up the appropriate card from the api.
+    #show template of the cards.
+    name = request.args["name"]
+    results = magic.search_by_name(name)
+
+    return render_template("/searchResults.html", results=results, name=name)
+    
 
 
 if __name__ == "__main__":

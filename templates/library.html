@@ -3,7 +3,9 @@
 
 <div class="well spaced" style="width: 50%;">
     <h2>Cards</h2>
-    <input type="text" href="/addCard" placeholder="Find card...">
+    <form action="/magicCards/search">
+        <input type="text" name="name" placeholder="Find card...">
+    </form>
     <ul>
     {% for card in user_cards %}
         <li>

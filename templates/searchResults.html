@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <form action="/magicCards/search">
+        <input value="{{name}}" type="text" name="name" placeholder="Find card...">
+    </form>
+    {% for card in results %}
+    <img src="{{card.image_url}}" alt="pictureOfCard.name">
+    <p>{{card.name}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
