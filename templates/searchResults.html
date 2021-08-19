@@ -5,8 +5,11 @@
         <input value="{{name}}" type="text" name="name" placeholder="Find card...">
     </form>
     {% for card in results %}
-    <img src="{{card.image_url}}" alt="pictureOfCard.name">
     <p>{{card.name}}</p>
+    <img src="{{card.image_url}}" alt="pictureOfCard.name">
+    <form action="/library/addedCards/{{card.id}}" method="POST">
+        <button type="submit">Add to library</button>
+    </form>
     {% endfor %}
 </div>
 {% endblock %}

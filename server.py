@@ -41,9 +41,9 @@ def register_process():
     
     db.session.add(new_user)
     db.session.commit()
-
+    session["user_id"] = new_user.user_id
     flash(f"User {username} added.")
-    return redirect(f"/library/{new_user.user_id}")
+    return redirect(f"/library")
     
 
 @app.route('/login', methods=['GET'])
@@ -89,7 +89,7 @@ def logout():
 def user_cards_list():
     """Show list of users cards."""
 
-    user_cards = User_Cards.query.all()
+    user_cards = User_Cards.query.filter_by(user_id=session["user_id"])
     return render_template("library.html", user_cards=user_cards)
 
 
@@ -105,6 +105,23 @@ def search_magic_cards():
 
     return render_template("/searchResults.html", results=results, name=name)
     
+
+@app.route("/library/addedCards/<cardid>", methods=["POST"])
+def add_cards_library(cardid):
+    """When the user finds the card they wanted to add, this adds the card to the library."""
+
+    #when the user finds the card they want, add that card to their library.
+    #return to their library with the card shown
+    cardinfo = magic.search_by_id(cardid)
+
+    card = Cards(name=cardinfo.name, image=cardinfo.image_url, text=cardinfo.text)
+    db.session.add(card)
+    db.session.commit()
+    user_card = User_Cards(card_id=card.card_id, user_id=session["user_id"])
+    db.session.add(user_card)
+    db.session.commit()
+    return redirect("/library")
+
 
 
 if __name__ == "__main__":

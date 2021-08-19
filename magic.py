@@ -7,3 +7,7 @@ def search_by_name(name):
     return mtgsdk.Card.where(name=name).all()
 
 
+def search_by_id(id):
+    """Finds the card by its id"""
+
+    return mtgsdk.Card.find(id=id)

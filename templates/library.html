@@ -2,14 +2,14 @@
 {% block content %}
 
 <div class="well spaced" style="width: 50%;">
-    <h2>Cards</h2>
     <form action="/magicCards/search">
         <input type="text" name="name" placeholder="Find card...">
     </form>
     <ul>
     {% for card in user_cards %}
         <li>
-
+            <p>{{card.cardinfo.name}}</p>
+            <img src="{{card.cardinfo.image}}" alt="image">
         </li>
     {% endfor %}
     </ul>

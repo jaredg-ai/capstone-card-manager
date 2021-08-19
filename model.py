@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from collections import defaultdict
 
+from sqlalchemy.orm import backref
+
 
 db = SQLAlchemy()
 
@@ -36,6 +38,7 @@ class User_Cards(db.Model):
     User_cards_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     card_id = db.Column(db.Integer, db.ForeignKey('cardInfo.card_id'), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), index=True)
+    cardinfo = db.relationship("Cards", backref="library")
 
 
 def connect_to_db(app):
